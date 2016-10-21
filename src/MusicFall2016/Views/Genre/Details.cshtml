@@ -1,0 +1,14 @@
+﻿@model MusicFall2016.Models.Genre
+@{ 
+    ViewBag.Title = "Details";
+}
+<h2> Albums in @Model.Name</h2>
+<table class="table">
+    <tbody>
+        @foreach (var album in ViewBag.AlbumsList)
+        {
+            <tr><td><a asp-controller="Genre" asp-action="Details" asp-route-id="@album.Albums">@album.Title</a></td></tr>
+
+        }
+    </tbody>
+</table>

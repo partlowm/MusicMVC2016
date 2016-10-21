@@ -1,0 +1,21 @@
+﻿@model MusicFall2016.Models.Genre
+
+@{ ViewData["Title"] = "Add Genre";}
+
+<h2>Add Genres</h2>
+<div class="form">
+    <form asp-action="Create" class="form-horizontal">
+        <div class="form-group">
+            <label asp-for="Name" class="col-sm-2 sontrol-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="Name" class="form-control" maxlength="20" autofocus />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn-success btn-lg" />
+            </div>
+        </div>
+    </form>
+</div>
+

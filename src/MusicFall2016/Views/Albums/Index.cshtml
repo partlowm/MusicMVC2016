@@ -1,0 +1,28 @@
+﻿@model IEnumerable<MusicFall2016.Models.Album>
+@{
+    ViewData["Title"] = "Albums";
+}
+<h2>Albums</h2>
+<br />
+<a class="btn btn-success btn-lg col-md-3" href="http://localhost:2264/Albums/Create">Add Album</a>
+<table class="table">
+   
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Artist</th>
+            <th>Genre</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    @foreach (var album in Model)
+    {
+        <tr>
+            <td>@album.Title</td>
+            <td>@album.Artist.Name</td>
+            <td>@album.Genre.Name</td>
+            <td>@album.Price</td>
+        </tr>
+    }
+    </table>
+
