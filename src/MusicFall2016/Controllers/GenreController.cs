@@ -39,15 +39,7 @@ namespace MusicFall2016.Controllers
             }
             return View(genre);
         }
-        public IActionResult AlbumsInGenre()
-        {
-
-            var genre = _context.Genres;
-
-            return View(genre.ToList());
-
-        }
-        [HttpPost]
+       
 
         public IActionResult Details(int? id)
         {
@@ -61,9 +53,40 @@ namespace MusicFall2016.Controllers
             {
                 return NotFound();
             }
-            ViewBag.AlbumsList = _context.Albums.Where(a => a.GenreID == genre.GenreID).OrderBy(async => async.Title);
+            ViewBag.AlbumsList = _context.Albums.Where(a => a.GenreID == genre.GenreID);
             return View(genre);
 
         }
+        public IActionResult Edit(int? id)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Genre genre = _context.Genres.SingleOrDefault(a => a.GenreID == id);
+            if (genre == null)
+            {
+                return NotFound();
+            }
+            ViewBag.AlbumsList = _context.Albums.Where(a => a.GenreID == genre.GenreID);
+            return View(genre);
+
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Genre genre)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Genres.Update(genre);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.ArtistID = new SelectList(_context.Artists, "ArtistID", "Name");
+            ViewBag.GenreID = new SelectList(_context.Genres, "GenreID", "Name");
+            return View(genre);
+        }
+
     }
 }

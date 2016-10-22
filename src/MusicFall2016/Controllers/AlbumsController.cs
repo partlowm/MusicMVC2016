@@ -22,8 +22,8 @@ namespace MusicFall2016.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            
-            var albums = _context.Albums.Include(a => a.Artist).Include(a => a.Genre); ;      
+
+            var albums = _context.Albums.Include(a => a.Artist).Include(a => a.Genre); ;
             return View(albums.ToList());
         }
         public IActionResult Create()
@@ -36,7 +36,7 @@ namespace MusicFall2016.Controllers
         [HttpPost]
         public IActionResult Create(Album album)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _context.Albums.Add(album);
                 _context.SaveChanges();
@@ -46,6 +46,61 @@ namespace MusicFall2016.Controllers
             ViewBag.GenreID = new SelectList(_context.Genres, "GenreID", "Name");
             return View(album);
         }
-       
+
+        [HttpPost]
+        public IActionResult Delete(Album album)
+        {
+            if (ModelState.IsValid) { 
+            _context.Albums.Remove(album);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+            }
+            return View(album);
+        }
+        public IActionResult Details(int? id)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Album album = _context.Albums.SingleOrDefault(a => a.AlbumID == id);
+            if (album == null)
+            {
+                return NotFound();
+            }
+            ViewBag.AlbumsList = _context.Albums.Where(a => a.AlbumID == album.AlbumID);
+            return View(album);
+
+        }
+        public IActionResult Edit(int? id)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Album album = _context.Albums.SingleOrDefault(a => a.AlbumID == id);
+            if (album == null)
+            {
+                return NotFound();
+            }
+            ViewBag.AlbumsList = _context.Albums.Where(a => a.AlbumID == album.AlbumID);
+            return View(album);
+
+        }
+        [HttpPost]
+        public IActionResult Edit(Album album)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Albums.Update(album);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.ArtistID = new SelectList(_context.Artists, "ArtistID", "Name");
+            ViewBag.GenreID = new SelectList(_context.Genres, "GenreID", "Name");
+            return View(album);
+        }
     }
 }

@@ -15,6 +15,7 @@
             {
                 <tr>
                     <td><a asp-action="Details" asp-route-id="@genre.GenreID">@genre.Name</a></td>
+                    <td><a class="btn btn-default" asp-action="Edit" asp-route-id="@genre.GenreID">Edit</a></td>
                 </tr>
             }
 </table>

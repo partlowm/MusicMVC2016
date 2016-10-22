@@ -7,9 +7,11 @@
     <tbody>
         @foreach (var album in ViewBag.AlbumsList)
         {
-            <tr><td><a asp-controller="Genre" asp-action="Details" asp-route-id="@album.Albums">@album.Title</a></td></tr>
+            <tr><td><asp-controller="Genre" asp-action="Details" asp-route-id="@album.GenreID">@album.Title</td></tr>
 
         }
+        
 
     </tbody>
 </table>
+<a class="btn btn-default" href="http://localhost:2264/Genre">Back To list</a>

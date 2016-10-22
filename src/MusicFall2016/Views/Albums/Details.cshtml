@@ -1,0 +1,13 @@
+﻿@model MusicFall2016.Models.Album
+@{
+    ViewBag.Title = "Details";
+}
+<h2> Album Details</h2>
+<br />
+<p><b>Title:</b><blockquote>@Model.Title</blockquote></p>
+<p><b>Artist:</b><blockquote></blockquote></p>
+<p><b>Artist Bio:</b><blockquote></blockquote></p>
+<p><b>Genre:</b><blockquote></blockquote>@Model.Genre</p>
+<p><b>Price:</b><blockquote>@Model.Price</blockquote></p>
+<a class="btn btn-default" asp-action="Edit" asp-route-id="@Model.AlbumID">Edit</a>
+<a class="btn btn-default" href="http://localhost:2264/Albums">Back To list</a>

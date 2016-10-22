@@ -39,5 +39,51 @@ namespace MusicFall2016.Controllers
             }
             return View(artist);
         }
+        public IActionResult Details(int? id)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Artist artist = _context.Artists.SingleOrDefault(a => a.ArtistID == id);
+            if (artist == null)
+            {
+                return NotFound();
+            }
+            ViewBag.AlbumsList = _context.Albums.Where(a => a.ArtistID == artist.ArtistID);
+            return View(artist);
+
+        }
+        public IActionResult Edit(int? id)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Artist artist = _context.Artists.SingleOrDefault(a => a.ArtistID == id);
+            if (artist == null)
+            {
+                return NotFound();
+            }
+            ViewBag.AlbumsList = _context.Albums.Where(a => a.ArtistID == artist.ArtistID);
+            return View(artist);
+
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Artist artist)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Artists.Update(artist);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.ArtistID = new SelectList(_context.Artists, "ArtistID", "Name");
+            ViewBag.GenreID = new SelectList(_context.Genres, "GenreID", "Name");
+            return View(artist);
+        }
     }
 }
