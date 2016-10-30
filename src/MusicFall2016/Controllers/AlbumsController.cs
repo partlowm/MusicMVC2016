@@ -48,7 +48,8 @@ namespace MusicFall2016.Controllers
         }
         public IActionResult Delete(int? id)
         {
-
+            ViewBag.ArtistID = new SelectList(_context.Artists, "ArtistID", "Name");
+            ViewBag.GenreID = new SelectList(_context.Genres, "GenreID", "Name");
             if (id == null)
             {
                 return NotFound();
@@ -62,13 +63,14 @@ namespace MusicFall2016.Controllers
 
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         public IActionResult Delete(Album album)
         {
 
                 _context.Albums.Remove(album);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
+            
 
         }
         public IActionResult Details(int? id)
