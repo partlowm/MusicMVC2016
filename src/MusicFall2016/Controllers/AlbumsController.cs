@@ -20,10 +20,45 @@ namespace MusicFall2016.Controllers
             _context = context;
         }
         // GET: /<controller>/
-        public IActionResult Index()
+        public IActionResult Index(string sortOrder, string searchString)
         {
-
-            var albums = _context.Albums.Include(a => a.Artist).Include(a => a.Genre);
+            ViewBag.AlbumNameSortParam = string.IsNullOrEmpty(sortOrder) ? "album_name" : "";
+            ViewBag.ArtistNameSortParam = sortOrder == "artist_name" ? "name_artist" : "artist_name";
+            ViewBag.GenreNameSortParam = sortOrder == "genre_name" ? "name_genre" : "genre_name";
+            ViewBag.PriceSortParam = sortOrder == "price_amnt" ? "amnt_price" : "price_amnt";
+            var albums = from a in _context.Albums.Include(a => a.Artist).Include(a => a.Genre) select a;
+            if (!string.IsNullOrEmpty(searchString))
+            { albums = albums.Where(a => a.Title.ToUpper().Contains(searchString.ToUpper()) ||  a.Genre.Name.ToUpper().Contains(searchString.ToUpper()) || a.Artist.Name.ToUpper().Contains(searchString.ToUpper()));
+           
+            }
+            switch (sortOrder)
+            {
+                case "album_name":
+                    albums = albums.OrderByDescending(a => a.Title);
+                    break;
+                case "artist_name":
+                    albums = albums.OrderByDescending(a => a.Artist.Name);
+                    break;
+                case "name_artist":
+                    albums = albums.OrderBy(a => a.Artist.Name);
+                    break;
+                case "genre_name":
+                    albums = albums.OrderByDescending(a => a.Genre.Name);
+                    break;
+                case "name_genre":
+                    albums = albums.OrderBy(a => a.Genre.Name);
+                    break;
+                case "price_amnt":
+                    albums = albums.OrderByDescending(a => a.Price);
+                    break;
+                case "amnt_price":
+                    albums = albums.OrderBy(a => a.Price);
+                    break;
+                default:
+                    albums = albums.OrderBy(a => a.Title);
+                    break;
+            }
+            
             return View(albums.ToList());
         }
         public IActionResult Create()

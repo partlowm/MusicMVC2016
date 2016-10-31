@@ -5,14 +5,21 @@
 <h2>Albums</h2>
 <br />
 <a class="btn btn-success btn-lg col-md-3" href="http://localhost:2264/Albums/Create">Add Album</a>
+<br />
+<br />
+<br />
+<div>
+    @using (Html.BeginForm())
+    { <p>@Html.TextBox("searchString") <input type="submit" value="Search" /></p> }
+</div>
 <table class="table">
    
     <thead>
         <tr>
-            <th>Title</th>
-            <th>Artist</th>
-            <th>Genre</th>
-            <th>Price</th>
+            <th>@Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.AlbumNameSortParam })</th>
+            <th>@Html.ActionLink("Artist", "Index", new { sortOrder = ViewBag.ArtistNameSortParam })</th>
+            <th>@Html.ActionLink("Genre", "Index", new { sortOrder = ViewBag.GenreNameSortParam })</th>
+            <th>@Html.ActionLink("Price", "Index", new { sortOrder = ViewBag.PriceSortParam })</th>
         </tr>
     </thead>
     @foreach (var album in Model)
