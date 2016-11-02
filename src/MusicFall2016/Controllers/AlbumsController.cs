@@ -58,9 +58,20 @@ namespace MusicFall2016.Controllers
                     albums = albums.OrderBy(a => a.Title);
                     break;
             }
-            
+           
             
             return View(albums.ToList());
+        }
+        [HttpPost]
+        public IActionResult Likes(int id)
+        {
+            
+                var album = _context.Albums.SingleOrDefault(a => a.AlbumID == id);
+                album.Likes++;
+                _context.Albums.Update(album);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            
         }
         public IActionResult Create()
         {
@@ -70,16 +81,40 @@ namespace MusicFall2016.Controllers
         }
 
         [HttpPost]
+
         public IActionResult Create(Album album)
+
         {
+            if (album.ArtistID != null && album.ArtistID != 0)
+            {
+                ModelState.Remove("Artist.Name");
+                album.Artist = null;
+            }
+
+            if (album.GenreID != null && album.GenreID != 0)
+            {
+                ModelState.Remove("Genre.Name");
+                album.Genre = null;
+            }
             if (ModelState.IsValid)
             {
-                _context.Albums.Add(album);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
+                var albumDuplicate = _context.Albums.FirstOrDefault(a => a.Title.ToLower() == album.Title.ToLower() && a.ArtistID == album.ArtistID);
+                if (albumDuplicate == null)
+                {
+                    _context.Albums.Add(album);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.DuplicationValidation = "Album already exists";
+                    ViewBag.ArtistList = new SelectList(_context.Artists, "ArtistID", "Name");
+                    ViewBag.GenreList = new SelectList(_context.Genres, "GenreID", "Name");
+                    return View(album);
+                }
             }
-            ViewBag.ArtistID = new SelectList(_context.Artists, "ArtistID", "Name");
-            ViewBag.GenreID = new SelectList(_context.Genres, "GenreID", "Name");
+            ViewBag.ArtistList = new SelectList(_context.Artists, "ArtistID", "Name");
+            ViewBag.GenreList = new SelectList(_context.Genres, "GenreID", "Name");
             return View(album);
         }
         public IActionResult Delete(int? id)
@@ -102,11 +137,10 @@ namespace MusicFall2016.Controllers
         [HttpPost]
         public IActionResult Delete(Album album)
         {
-
+            
                 _context.Albums.Remove(album);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
-            
 
         }
         public IActionResult Details(int? id)

@@ -12,20 +12,27 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.ArtistID, "Artist", htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="col-md-2 control-label" for="Artist">Artist</label>
             <div class="col-md-10">
-                @Html.DropDownList("ArtistID", null, htmlAttributes: new { @class = "form-control" }) or Add a Artist: <input asp-for="Artist.Name" class="form-control" />
-                @Html.ValidationMessageFor(model => model.ArtistID, "", new { @class = "text-danger" })
+                <select class="form-control inline" asp-for="ArtistID" asp-items="ViewBag.ArtistID">
+                    <option value="0">Select an artist</option>
+                </select>
+                or
+                <input class="form-control inline" asp-for="Artist.Name" type="text" placeholder="Create new artist" />
             </div>
+            <span asp-validation-for="Artist" class="text-danger"></span>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.GenreID, "Genre", htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="col-md-2 control-label" for="Genre">Genre</label>
             <div class="col-md-10">
-                @Html.DropDownList("GenreID", null, htmlAttributes: new { @class = "form-control" }) or Add a Genre: <input asp-for="Genre.Name" class="form-control" />
-                @Html.ValidationMessageFor(model => model.GenreID, "", new { @class = "text-danger" })
+                <select class="form-control inline" asp-for="GenreID" asp-items="ViewBag.GenreID">
+                    <option value="0">Select a genre</option>
+                </select>
+                or
+                <input class="form-control inline" asp-for="Genre.Name" type="text" placeholder="Create new genre" />
             </div>
+            <span asp-validation-for="Genre" class="text-danger"></span>
         </div>
-        
         <div class="form-group">
             <label asp-for="Price" class="col-md-2 control-label"></label>
             <div class="col-md-10">
