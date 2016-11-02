@@ -31,12 +31,18 @@ namespace MusicFall2016.Controllers
         [HttpPost]
         public IActionResult Create(Genre genre)
         {
-            if (ModelState.IsValid)
+            if (_context.Genres.Any(ac => ac.Name.Equals(genre.Name)))
+            {
+
+                return RedirectToAction("Index");
+            }
+            else
             {
                 _context.Genres.Add(genre);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             return View(genre);
         }
        

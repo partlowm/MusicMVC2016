@@ -33,9 +33,18 @@ namespace MusicFall2016.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Artists.Add(artist);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
+                if (_context.Artists.Any(ac => ac.Name.Equals(artist.Name)))
+   {
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    _context.Artists.Add(artist);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+               
             }
             return View(artist);
         }

@@ -20,6 +20,7 @@
             <th>@Html.ActionLink("Artist", "Index", new { sortOrder = ViewBag.ArtistNameSortParam })</th>
             <th>@Html.ActionLink("Genre", "Index", new { sortOrder = ViewBag.GenreNameSortParam })</th>
             <th>@Html.ActionLink("Price", "Index", new { sortOrder = ViewBag.PriceSortParam })</th>
+            <th>Likes</th>
         </tr>
     </thead>
     @foreach (var album in Model)
@@ -29,9 +30,12 @@
             <td>@album.Artist.Name</td>
             <td>@album.Genre.Name</td>
             <td>@album.Price</td>
-            <td><a class="btn btn-default" asp-action="Details" asp-route-id="@album.AlbumID">Details</a>
+            <td>@album.Likes</td>
+            <td>
+            <button class="btn btn-default" value="countLikes" >Like</button>
+            <a class="btn btn-default" asp-action="Details" asp-route-id="@album.AlbumID">Details</a>
             <a class="btn btn-default" asp-action="Edit" asp-route-id="@album.AlbumID">Edit</a>
-                <a class="btn btn-default" asp-action="Delete" asp-route-id="@album.AlbumID">Delete</a></td>
+            <a class="btn btn-default" asp-action="Delete" asp-route-id="@album.AlbumID">Delete</a></td>
         </tr>
     }
     </table>

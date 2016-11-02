@@ -59,6 +59,7 @@ namespace MusicFall2016.Controllers
                     break;
             }
             
+            
             return View(albums.ToList());
         }
         public IActionResult Create()
