@@ -37,22 +37,22 @@ namespace MusicFall2016.Controllers
                     albums = albums.OrderByDescending(a => a.Title);
                     break;
                 case "artist_name":
-                    albums = albums.OrderByDescending(a => a.Artist.Name);
-                    break;
-                case "name_artist":
                     albums = albums.OrderBy(a => a.Artist.Name);
                     break;
-                case "genre_name":
-                    albums = albums.OrderByDescending(a => a.Genre.Name);
+                case "name_artist":
+                    albums = albums.OrderByDescending(a => a.Artist.Name);
                     break;
-                case "name_genre":
+                case "genre_name":
                     albums = albums.OrderBy(a => a.Genre.Name);
                     break;
+                case "name_genre":
+                    albums = albums.OrderByDescending(a => a.Genre.Name);
+                    break;
                 case "price_amnt":
-                    albums = albums.OrderByDescending(a => a.Price);
+                    albums = albums.OrderBy(a => a.Price);
                     break;
                 case "amnt_price":
-                    albums = albums.OrderBy(a => a.Price);
+                    albums = albums.OrderByDescending(a => a.Price);
                     break;
                 default:
                     albums = albums.OrderBy(a => a.Title);
